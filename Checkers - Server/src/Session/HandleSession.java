@@ -1,23 +1,12 @@
 package Session;
 
-import javax.swing.*;
-
 import EnumConstants.Checkers;
 import Model.Game;
 import Model.Player;
 import Model.Square;
 
-import java.io.*;
 import java.net.*;
-import java.awt.*;
 
-/**
- * Server Application --> Handle Session
- * 
- * @author keerthikan
- * 
- *         Handle Game Logic and Player requests
- */
 public class HandleSession implements Runnable {
 
 	private Game checkers;
@@ -26,23 +15,21 @@ public class HandleSession implements Runnable {
 
 	private boolean continueToPlay = true;
 
-	// Construct thread
+	// Khởi tạo luồng
 	public HandleSession(Socket p1, Socket p2) {
-		player1 = new Player(Checkers.PLAYER_ONE.getValue(), p1);
-		player2 = new Player(Checkers.PLAYER_TWO.getValue(), p2);
-
+		player1 = new Player(p1);
+		player2 = new Player(p2);
 		checkers = new Game();
 	}
 
 	public void run() {
 
-		// Send Data back and forth
 		try {
-			// notify Player 1 to start
 			player1.sendData(1);
 
 			while (continueToPlay) {
-				// wait for player 1's Action
+				
+				// Đợi lượt người chơi 1
 				while (true) {
 					int from = player1.receiveData();
 					int to = player1.receiveData();
@@ -51,29 +38,32 @@ public class HandleSession implements Runnable {
 						checkStatus(from, to);
 						updateGameModel(from, to);
 
-						// Send Data back to 2nd Player
+						// Trả về kết quả nếu kết thúc cho người chơi 2
 						if (checkers.isOver()) {
 							System.out.println("player 1");
-							player2.sendData(Checkers.YOU_LOSE.getValue()); }// Game Over notification
+							player2.sendData(Checkers.YOU_LOSE.getValue());
+						}
+						
+						// Gửi dữ liệu cho người chơi 2
 						int fromStatus = player2.sendData(from);
 						int toStatus = player2.sendData(to);
 						checkStatus(fromStatus, toStatus);
 
-						// IF game is over, break
+						// Trả về kết quả nếu kết thúc cho người chơi 1
 						if (checkers.isOver()) {
 							player1.sendData(Checkers.YOU_WIN.getValue());
 							continueToPlay = false;
 							break;
 						}
 					} else {
-						int fromStatus = player2.sendData(from);
+						player2.sendData(from);
 						break;
 					}
 
 				}
-
+				
+				// Đợi lượt người chơi 2
 				while (true) {
-					// wait for player 2's Action
 					int from = player2.receiveData();
 					int to = player2.receiveData();
 					System.out.println("Second break " + from + " " + to);
@@ -81,16 +71,18 @@ public class HandleSession implements Runnable {
 						checkStatus(from, to);
 						updateGameModel(from, to);
 
-						// Send Data back to 1st Player
+						// Trả về kết quả nếu kết thúc cho người chơi 1
 						if (checkers.isOver()) {
 							System.out.println("player 2");
 							player1.sendData(Checkers.YOU_LOSE.getValue()); // Game Over notification
 						}
+						
+						// Gửi dữ liệu cho người chơi 1
 						int fromStatus = player1.sendData(from);
 						int toStatus = player1.sendData(to);
 						checkStatus(fromStatus, toStatus);
 
-						// IF game is over, break
+						// Trả về kết quả nếu kết thúc cho người chơi 2
 						if (checkers.isOver()) {
 							player2.sendData(Checkers.YOU_WIN.getValue());
 							continueToPlay = false;
@@ -98,31 +90,32 @@ public class HandleSession implements Runnable {
 						}
 
 					} else {
-						int fromStatus = player1.sendData(from);
+						player1.sendData(from);
 						break;
 					}
 				}
 			}
 
 		} catch (Exception ex) {
-			System.out.println("Connection is being closed");
+			System.out.println("Ngắt kết nối");
 
 			if (player1.isOnline())
 				player1.closeConnection();
 
 			if (player2.isOnline())
 				player2.closeConnection();
-
 			return;
 		}
 	}
 
+	// Kiểm tra kết nối
 	private void checkStatus(int status, int status2) throws Exception {
 		if (status == 99 || status2 == 99) {
-			throw new Exception("Connection is lost");
+			throw new Exception("Mất kết nối");
 		}
 	}
 
+	// Cập nhật trạng thái bàn cờ 
 	private void updateGameModel(int from, int to) {
 		Square fromSquare = checkers.getSquare(from);
 		Square toSquare = checkers.getSquare(to);
@@ -132,6 +125,7 @@ public class HandleSession implements Runnable {
 		checkCrossJump(fromSquare, toSquare);
 	}
 
+	// Kiểm tra nhảy ăn quân
 	private void checkCrossJump(Square from, Square to) {
 		if (Math.abs(from.getSquareRow() - to.getSquareRow()) == 2) {
 			int middleRow = (from.getSquareRow() + to.getSquareRow()) / 2;
@@ -142,37 +136,3 @@ public class HandleSession implements Runnable {
 		}
 	}
 }
-//class myThread extends Thread { 
-//	HandleSession hs;
-//	Player player1,player2; 
-//	
-//	public myThread(Player p1, Player p2, HandleSession hs) { 
-//		this.player1=p1;
-//		this.player2=p2;
-//		this.hs=hs;
-//	}
-//	public void run() {
-//		int from = player1.receiveData();
-//		int to = player1.receiveData();
-//		if (from*to!=0) {
-//			hs.checkStatus(from, to);
-//			updateGameModel(from, to);
-//					
-//			//Send Data back to 2nd Player
-//			if(checkers.isOver())
-//				player2.sendData(Checkers.YOU_LOSE.getValue());		//Game Over notification
-//			int fromStatus = player2.sendData(from);
-//			int toStatus = player2.sendData(to);
-//			checkStatus(fromStatus,toStatus);
-//			
-//			//IF game is over, break
-//			if(checkers.isOver()){
-//				player1.sendData(Checkers.YOU_WIN.getValue());
-//				continueToPlay=false;
-//				break;
-//			}
-//			
-//			if (from*to!=0) System.out.println("after break "+from+" "+to);
-//		}
-//	}
-//}

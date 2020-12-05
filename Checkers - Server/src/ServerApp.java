@@ -8,22 +8,14 @@ import java.io.*;
 import java.net.*;
 import java.util.Date;
 
-/**
- * Server Application -> ServerApp
- * @author Keerthikan
- * 
- * Server and establish Connection
- */
 public class ServerApp extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
 	
-	//Frame components
 	private JScrollPane scroll;
 	private JTextArea information;
 	private JLabel title;
 	
-	//Network properties
 	private ServerSocket serverSocket;
 	int sessionNo;
 	
@@ -39,44 +31,39 @@ public class ServerApp extends JFrame {
 		add(scroll, BorderLayout.CENTER);
 	}	
 	
-	//Establish connection and wait for Clients
+	// Tạo Server và đợi Client
 	public void startRunning(){
-		
 		try{
 			
 			PropertyManager pm = PropertyManager.getInstance();
 			int port = pm.getPort();
 			
-			//Create a server socket
+			// Khởi tạo Server
 			serverSocket = new ServerSocket(port);
-			information.append(serverSocket.getInetAddress().getHostAddress());
-			information.append(new Date() + ":- Server start at port "+ port + " \n");
+			information.append(new Date() + ":- Server tạo ở cổng "+ port + " \n");
 			sessionNo = 1;			
 			
 			while(true){
 				
-				information.append(new Date()+ ":- Session "+ sessionNo + " is started\n");
+				information.append(new Date()+ ":- Session "+ sessionNo + " được bắt đầu\n");
 				
-				//Wait for player 1
+				// Đợi người chơi 1
 				Socket player1 = serverSocket.accept();
-				information.append(new Date() + ":- player1 joined at ");
+				information.append(new Date() + ":- Người chơi 1 tham gia qua IP: ");
 				information.append(player1.getInetAddress().getHostAddress() + "\n");
 				
-				//Notification to player1 that's he's connected successfully
 				new DataOutputStream(player1.getOutputStream()).writeInt(Checkers.PLAYER_ONE.getValue());
 				
-				//Wait for player 2
+				// Đợi người chơi 2
 				Socket player2 = serverSocket.accept();
-				information.append(new Date() + ":- player2 joined at ");
+				information.append(new Date() + ":- Người chơi 2 tham gia qua IP: ");
 				information.append(player2.getInetAddress().getHostAddress() +"\n");
 				
-				//Notification to player2 that's he's connected successfully
 				new DataOutputStream(player2.getOutputStream()).writeInt(Checkers.PLAYER_TWO.getValue());
 				
-				//Increase Session number
 				sessionNo++;
 				
-				// Create a new thread for this session of two players
+				// Tạo luồng đợi 2 người chơi mới
 				HandleSession task = new HandleSession(player1, player2);
 				new Thread(task).start();
 			}

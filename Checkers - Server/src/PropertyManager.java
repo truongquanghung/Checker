@@ -8,6 +8,7 @@ public class PropertyManager {
 	private static PropertyManager INSTANCE = null;
 	private Properties prop;
 	
+	// Đọc file để lấy giá trị port
 	private PropertyManager() throws IOException{
 		prop = new Properties();
 		InputStream is = getClass().getClassLoader().getResourceAsStream("config.properties");

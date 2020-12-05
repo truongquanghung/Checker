@@ -1,6 +1,6 @@
 package EnumConstants;
 
-// Hằng ố cho bản cờ
+// Hằng số cho bản cờ
 public enum Checkers {	
 	
 	NUM_ROWS(8),

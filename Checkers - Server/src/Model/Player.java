@@ -4,20 +4,12 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-/**
- * Server Application -> Player
- * @author Siyar
- * 
- * Player Model
- */
 public class Player{
-	private int PlayerID;
 	private Socket socket;
 	private DataInputStream fromPlayer;
 	private DataOutputStream toPlayer;
 	
-	public Player(int ID, Socket s){
-		this.PlayerID = ID;
+	public Player(Socket s){
 		this.socket = s;
 		
 		try{
@@ -30,37 +22,37 @@ public class Player{
 		}
 	}
 	
+	// Gửi dữ liệu
 	public int sendData(int data){
 		try {
 			this.toPlayer.writeInt(data);
-			return 1; //Successfull
+			return 1; 
 		} catch (IOException e) {
-			System.out.println("sending: Player not found");
-			//e.printStackTrace();
-			return 99;	//failure
+			return 99;
 		}		
 	}
 	
+	// Nhận dữ liệu
 	public int receiveData(){
 		int data = 0;
 		try{
 			data = this.fromPlayer.readInt();
 			return data;
 		}catch (IOException e) {
-			System.out.println("Waiting: No respond from Player");
 			return 99;
 		}
 	}
 	
+	// Ngắt kết nối
 	public void closeConnection(){
 		try {
 			this.socket.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
+	// Kiểm tra trực tuyến
 	public boolean isOnline(){
 		return socket.isConnected();
 	}

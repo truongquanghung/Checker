@@ -2,12 +2,6 @@ package Model;
 
 import EnumConstants.Checkers;
 
-/**
- * Server Application -> Square
- * @author  Siyar
- * 
- * Square Model
- */
 public class Square {
 	
 	private int SquareID;
@@ -16,8 +10,6 @@ public class Square {
 	private boolean filled;
 	private int playerID;
 	
-	
-	//Constructor
 	public Square(int SquareID, int SquareRow, int SquareCol, boolean isFilled){
 		this.SquareID=SquareID;
 		this.SquareRow=SquareRow;
