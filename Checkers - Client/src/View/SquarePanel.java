@@ -15,24 +15,16 @@ import Model.Square;
 import EnumConstants.*;
 import Handler.MyMouseListener;
 
-/**
- * Client Application -> SquarePanel
- * @author Keerthikan
- * 
- * Square Panel
- */
+// Giao diện quân cờ 
 public class SquarePanel extends JPanel {
 	
 	private static final long serialVersionUID = 1L;
 	
 	private Square square;
-	private Border defaultBorder = BorderFactory.createEtchedBorder(WHEN_FOCUSED, Color.black, Color.gray);
-	//private Border focusedBorder = BorderFactory.createEtchedBorder(WHEN_FOCUSED, Color.white, Color.gray);
 	private Border thickBorder = BorderFactory.createLineBorder(Colors.PURPLE.getColor(),5);
 	private boolean focused;
 	private MouseHandler handler;
 	
-	//Constructor
 	public SquarePanel(Square s){
 		this.square = s;
 		this.focused = false;
@@ -45,13 +37,11 @@ public class SquarePanel extends JPanel {
 		Graphics2D g2 = (Graphics2D) g;
 		super.paintComponents(g2);
 		
-		//Fill black color
 		g2.setColor(Colors.BLACK.getColor());
 		if(square.getIsFilled()){
 			g2.fillRect(0, 0, getWidth(), getHeight());
 		}
 		
-		//fill piece color
 		int squareplayerID = square.getPlayerID();
 		if(isClicked()){
 			g2.setColor(Colors.getFocusedColor(squareplayerID));
@@ -67,7 +57,7 @@ public class SquarePanel extends JPanel {
 			}
 		}
 		
-		//Hover effect for possible move
+		// Hiện khả năng đi
 		if(square.isPossibleToMove()){
 			if(focused){				
 				setBorder(thickBorder);
@@ -78,7 +68,7 @@ public class SquarePanel extends JPanel {
 			setBorder(null);
 		}
 		
-		//King
+		// Hiện Vua
 		if(square.isKing() && square.getIsFilled()){
 			g2.setColor(Color.WHITE);
 			g2.setFont(new Font("Arial",Font.BOLD,25));
@@ -105,22 +95,18 @@ public class SquarePanel extends JPanel {
 		}
 	}
 	
-	//return Square
 	public Square getSquare(){
 		return this.square;
 	}
 	
-	//return clicked
 	public boolean isClicked(){
 		return this.square.isSelected();
 	}
 	
-	//reset clicked to false
 	public void resetClicked(){
 		this.square.setSelected(false);
 	}
 	
-	//reset clicked to true
 	public void setClicked(){
 		this.square.setSelected(true);
 	}
@@ -131,9 +117,6 @@ public class SquarePanel extends JPanel {
 		g2.fillOval(padding/2, padding/2, getWidth()-padding, getHeight()-padding);			
 	}
 	
-	/**
-	 * My Mouse Listener 
-	 */
 	class MouseHandler extends MouseAdapter {
 		
 		public void mouseEntered(MouseEvent e){	
@@ -149,17 +132,6 @@ public class SquarePanel extends JPanel {
 		}
 		
 		public void mousePressed(MouseEvent e) {
-			/*
-			if(isClicked()){
-				System.out.println("deselect - "+square.getSquareID());
-				resetClicked();
-				repaint();
-			}
-			else if(square.getPlayerID()==SessionVariable.myID.getValue()){
-				System.out.println("select - "+square.getSquareID());
-				setClicked();
-				repaint();		
-			}*/
 		}
 	}
 }

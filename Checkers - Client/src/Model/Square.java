@@ -3,12 +3,6 @@ package Model;
 import EnumConstants.Checkers;
 import EnumConstants.SessionVariable;
 
-/**
- * Client Application -> ClientApp
- * @author Siyar
- * 
- * ClientApp
- */
 public class Square {
 	
 	private int SquareID;
@@ -20,7 +14,6 @@ public class Square {
 	private boolean isPossibleToMove;
 	private int playerID;	
 	
-	//Constructor
 	public Square(int SquareID, int SquareRow, int SquareCol, boolean isFilled){
 		this.SquareID=SquareID;
 		this.SquareRow=SquareRow;

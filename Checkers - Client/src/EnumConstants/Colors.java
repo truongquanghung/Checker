@@ -1,13 +1,8 @@
 package EnumConstants;
 
+// Hằng số cài đặt màu
 import java.awt.Color;
 
-/**
- * Client Application -> Enum Colors
- * @author  Siyar
- * 
- * Colors
- */
 public enum Colors {
 	BLACK(Color.BLACK),
 	WHITE(Color.WHITE),
@@ -17,10 +12,8 @@ public enum Colors {
 	YELLOW(Color.YELLOW);
 	
 	
-	//properties
 	private Color color;
 	
-	//Constructor
 	Colors(Color color){
 		this.color = color;
 	}

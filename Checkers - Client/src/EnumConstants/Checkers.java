@@ -1,11 +1,6 @@
 package EnumConstants;
 
-/**
- * Client Application -> Enum Checkers
- * @author Siyar
- * 
- * Checker Constants
- */
+// Hằng ố cho bản cờ
 public enum Checkers {	
 	
 	NUM_ROWS(8),

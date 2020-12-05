@@ -2,12 +2,6 @@ package Model;
 
 import EnumConstants.SessionVariable;
 
-/**
- * Client Application -> Player
- * @author  Siyar
- * 
- * Board Model
- */
 public class Player {
 	
 	private String name;

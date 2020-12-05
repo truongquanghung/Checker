@@ -8,6 +8,7 @@ public class PropertyManager {
 	private static PropertyManager INSTANCE = null;
 	private Properties prop;
 	
+	// Đọc file để lấy địa chỉ IP, port
 	private PropertyManager() throws IOException{
 		prop = new Properties();
 		InputStream is = getClass().getClassLoader().getResourceAsStream("config.properties");
@@ -15,7 +16,7 @@ public class PropertyManager {
 		if(is != null){
 			prop.load(is);
 		}else{
-			throw new FileNotFoundException("Property file is not found");
+			throw new FileNotFoundException("File cài đặt in không tồn tại!");
 		}
 	}
 	

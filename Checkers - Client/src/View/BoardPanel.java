@@ -1,22 +1,15 @@
 package View;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.LinkedList;
 
-import javax.sound.midi.ControllerEventListener;
 import javax.swing.*;
 import Model.Board;
 import Model.Square;
 import EnumConstants.SessionVariable;
 import Handler.*;
 
-/**
- * Client Application -> ClientApp
- * @author Keerthikan
- * 
- * ClientApp
- */
+// Giao diện bàn cờ 
 public class BoardPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;

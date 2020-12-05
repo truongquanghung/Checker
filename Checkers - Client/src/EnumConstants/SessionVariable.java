@@ -1,9 +1,9 @@
 package EnumConstants;
 
+// Hằng số cài session
 public enum SessionVariable{
 	
 	myID(3);
-	//public static MyMouseListener mouseListener = new MyMouseListener();
 	
 	private int value;
 	

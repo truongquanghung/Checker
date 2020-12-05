@@ -2,11 +2,7 @@ package Handler;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-
 import javax.swing.JOptionPane;
-import javax.swing.border.Border;
-
 import Model.Square;
 import View.SquarePanel;
 
@@ -19,6 +15,7 @@ public class MyMouseListener extends MouseAdapter{
 		this.controller = c;
 	}
 	
+	// Kiểm tra lượt khi nhấn chuột
 	@Override
 	public void mousePressed(MouseEvent e) {
 		super.mousePressed(e);
@@ -28,8 +25,8 @@ public class MyMouseListener extends MouseAdapter{
 			if(controller.isHisTurn()){
 				ToggleSelectPiece(e);
 			}else{
-				JOptionPane.showMessageDialog(null, "Not your turn",
-					"Error", JOptionPane.ERROR_MESSAGE, null);
+				JOptionPane.showMessageDialog(null, "Không phải lượt của bạn!",
+					"Cảnh báo!", JOptionPane.ERROR_MESSAGE, null);
 			}
 		}catch(Exception ex){
 			System.out.println("Error");
@@ -38,12 +35,12 @@ public class MyMouseListener extends MouseAdapter{
 		
 	}
 	
+	// Đảo trạng thái ô nhấn
 	private void ToggleSelectPiece(MouseEvent e){
 		try{
 			squarePanel = (SquarePanel) e.getSource();
 			Square s = squarePanel.getSquare();
 			
-			//if square is already selected - deselect
 			if(s.isSelected()){
 				System.out.println("deselect - "+s.getSquareID());
 				controller.squareDeselected();				

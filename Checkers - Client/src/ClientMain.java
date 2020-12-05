@@ -1,12 +1,5 @@
 import javax.swing.*;
-import View.BoardPanel;
 
-/**
- * Client Application -> Main
- * @author Keerthikan
- * 
- * Main
- */
 public class ClientMain {
 	
 	public static void main(String[] args) {
