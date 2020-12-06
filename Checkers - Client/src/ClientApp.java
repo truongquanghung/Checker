@@ -64,6 +64,7 @@ public class ClientApp extends JFrame {
 
 			player.setPlayerID(fromServer.readInt());
 
+			// Tạo Controller cho player tương ứng
 			Controller task = new Controller(player, fromServer, toServer);
 			setup(task);
 

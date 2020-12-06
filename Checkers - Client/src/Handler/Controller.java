@@ -25,9 +25,8 @@ public class Controller implements Runnable {
 	private Player player;
 
 	// Khai báo biến để lấy dữ liệu
-	private LinkedList<Square> selectedSquares;
-	private LinkedList<Square> playableSquares;
-	// private LinkedList<Square> crossableSquares;
+	private LinkedList<Square> selectedSquares; // Ô đã click 
+	private LinkedList<Square> playableSquares; // Ô đi được
 
 	public Controller(Player player, DataInputStream input, DataOutputStream output) {
 		this.player = player;

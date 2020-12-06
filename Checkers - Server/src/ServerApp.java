@@ -63,7 +63,7 @@ public class ServerApp extends JFrame {
 				
 				sessionNo++;
 				
-				// Tạo luồng đợi 2 người chơi mới
+				// Tạo luồng cho 2 người chơi mới
 				HandleSession task = new HandleSession(player1, player2);
 				new Thread(task).start();
 			}
