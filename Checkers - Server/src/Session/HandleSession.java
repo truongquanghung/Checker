@@ -37,17 +37,17 @@ public class HandleSession implements Runnable {
 					if (from != -1) {
 						checkStatus(from, to);
 						updateGameModel(from, to);
+						
+						// Gửi dữ liệu cho người chơi 2
+						int fromStatus = player2.sendData(from);
+						int toStatus = player2.sendData(to);
+						checkStatus(fromStatus, toStatus);
 
 						// Trả về kết quả nếu kết thúc cho người chơi 2
 						if (checkers.isOver()) {
 							System.out.println("player 1");
 							player2.sendData(Checkers.YOU_LOSE.getValue());
 						}
-						
-						// Gửi dữ liệu cho người chơi 2
-						int fromStatus = player2.sendData(from);
-						int toStatus = player2.sendData(to);
-						checkStatus(fromStatus, toStatus);
 
 						// Trả về kết quả nếu kết thúc cho người chơi 1
 						if (checkers.isOver()) {
@@ -71,16 +71,16 @@ public class HandleSession implements Runnable {
 						checkStatus(from, to);
 						updateGameModel(from, to);
 
+						// Gửi dữ liệu cho người chơi 1
+						int fromStatus = player1.sendData(from);
+						int toStatus = player1.sendData(to);
+						checkStatus(fromStatus, toStatus);
+						
 						// Trả về kết quả nếu kết thúc cho người chơi 1
 						if (checkers.isOver()) {
 							System.out.println("player 2");
 							player1.sendData(Checkers.YOU_LOSE.getValue()); // Game Over notification
 						}
-						
-						// Gửi dữ liệu cho người chơi 1
-						int fromStatus = player1.sendData(from);
-						int toStatus = player1.sendData(to);
-						checkStatus(fromStatus, toStatus);
 
 						// Trả về kết quả nếu kết thúc cho người chơi 2
 						if (checkers.isOver()) {

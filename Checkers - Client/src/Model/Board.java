@@ -89,7 +89,7 @@ public class Board {
 	private void twoFrontSquares(LinkedList<Square> pack, int movableRow, int selectedCol) {
 
 		if (movableRow >= 0 && movableRow < 8) {
-			// right Corner
+			// Góc phải
 			if (selectedCol >= 0 && selectedCol < 7) {
 				Square rightCorner = squares[movableRow][selectedCol + 1];
 				if (rightCorner.getPlayerID() == 0) {
@@ -98,7 +98,7 @@ public class Board {
 				}
 			}
 
-			// left upper corner
+			// Góc trái
 			if (selectedCol > 0 && selectedCol <= 8) {
 				Square leftCorner = squares[movableRow][selectedCol - 1];
 				if (leftCorner.getPlayerID() == 0) {
