@@ -10,8 +10,6 @@ import java.net.*;
 
 public class ClientApp extends JFrame {
 
-	private static final long serialVersionUID = 1L;
-
 	private String address;
 	private int port;
 
